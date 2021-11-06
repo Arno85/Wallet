@@ -9,13 +9,23 @@ export const fetchCategories = () => {
     let categories: Category[] = [];
 
     const sendRequest = async () => {
-      const response = await api.get<Category[]>(`/organization/categories.json`);
+      const response = await api.get(`categories.json`);
 
       if (response.status !== statusCodes.ok) {
         throw new Error();
       }
 
-      return response.data || [];
+      const categoryData = Object.keys(response.data).map((k) => {
+        const data = response.data[k].category;
+
+        return {
+          id: k,
+          name: data.name,
+          type: data.type,
+        } as Category;
+      });
+
+      return categoryData.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
     };
 
     try {
@@ -30,6 +40,40 @@ export const fetchCategories = () => {
       );
     } finally {
       dispatch(categoriesActions.endFetchCategories(categories));
+    }
+  };
+};
+
+export const addCategory = (category: Partial<Category>) => {
+  return async (dispatch: Dispatch) => {
+    const sendRequest = async () => {
+      const response = await api.post<{ name: string }>(`categories.json`, { category });
+
+      if (response.status !== statusCodes.ok) {
+        throw new Error();
+      }
+
+      return response.data.name;
+    };
+
+    try {
+      const categoryId = await sendRequest();
+      const categoryCreated = { ...category, id: categoryId } as Category;
+
+      dispatch(categoriesActions.addCategory(categoryCreated));
+      dispatch(
+        rootActions.setNotification({
+          status: 'success',
+          message: `Category ${category.name} created!`,
+        }),
+      );
+    } catch (_) {
+      dispatch(
+        rootActions.setNotification({
+          status: 'error',
+          message: `An error occured during the creation of the category ${category.name}`,
+        }),
+      );
     }
   };
 };

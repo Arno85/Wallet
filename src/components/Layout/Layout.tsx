@@ -1,12 +1,18 @@
+import { styled } from '@mui/material';
 import { Fragment } from 'react';
 import Header from './Header/Header';
-import classes from './Layout.module.scss';
+
+const StyledMain = styled('main')(({ theme }) => ({
+  marginTop: '64px',
+  padding: theme.spacing(4),
+  minHeight: 'calc(100% - 64px)',
+}));
 
 const Layout: React.FC = (props) => {
   return (
     <Fragment>
       <Header />
-      <main className={classes.main}>{props.children}</main>
+      <StyledMain>{props.children}</StyledMain>
     </Fragment>
   );
 };

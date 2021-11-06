@@ -1,14 +1,22 @@
+import { GridColDef } from '@mui/x-data-grid';
+import WalletList from 'components/UI/WalletList/WalletList';
 import { Category } from 'models/category';
-import { Fragment } from 'react';
 
 const CategoryList: React.FC<{ categories: Category[] }> = (props) => {
-  return (
-    <Fragment>
-      {props.categories.map((c) => (
-        <p>{c.name}</p>
-      ))}
-    </Fragment>
-  );
+  const columns = [
+    { field: 'name', headerName: 'Name' },
+    { field: 'type', headerName: 'Type' },
+  ] as GridColDef[];
+
+  const rows = props.categories.map((c) => {
+    return {
+      id: c.id,
+      [columns[0].field]: c.name,
+      [columns[1].field]: c.type,
+    };
+  });
+
+  return <WalletList columns={columns} rows={rows} />;
 };
 
 export default CategoryList;

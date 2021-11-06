@@ -26,6 +26,15 @@ const slice = createSlice({
         isLoading: false,
       };
     },
+    addCategory(state, action: PayloadAction<Category>) {
+      const categories = [...state.categories];
+      categories.unshift(action.payload);
+
+      return {
+        ...state,
+        categories,
+      };
+    },
   },
 });
 
