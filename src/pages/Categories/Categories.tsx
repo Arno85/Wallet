@@ -2,14 +2,14 @@ import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from 'store/categories/actions';
 import { AppStore } from 'store/appStore';
-import CategoryList from 'components/Categories/CatregoryList/CategoryList';
-import CategoryAdd from 'components/Categories/CategoryAdd/CategoryAdd';
+import CategoryList from 'components/Categories/CategoryList/CategoryList';
+import CategoryManageModal from 'components/Categories/CategoryManageModal/CategoryManageModal';
 import { styled } from '@mui/material';
 
 const StyledHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   marginBottom: theme.spacing(4),
-  button: {
+  div: {
     marginLeft: 'auto',
   },
 }));
@@ -26,7 +26,7 @@ const Categories: React.FC = () => {
     <Fragment>
       <StyledHeader>
         <h1>Categories</h1>
-        <CategoryAdd />
+        <CategoryManageModal />
       </StyledHeader>
       <CategoryList categories={categories} />
     </Fragment>

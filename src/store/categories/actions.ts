@@ -16,8 +16,7 @@ export const fetchCategories = () => {
       }
 
       const categoryData = Object.keys(response.data).map((k) => {
-        const data = response.data[k].category;
-
+        const data = response.data[k];
         return {
           id: k,
           name: data.name,
@@ -47,7 +46,7 @@ export const fetchCategories = () => {
 export const addCategory = (category: Partial<Category>) => {
   return async (dispatch: Dispatch) => {
     const sendRequest = async () => {
-      const response = await api.post<{ name: string }>(`categories.json`, { category });
+      const response = await api.post<{ name: string }>(`categories.json`, category);
 
       if (response.status !== statusCodes.ok) {
         throw new Error();
@@ -72,6 +71,72 @@ export const addCategory = (category: Partial<Category>) => {
         rootActions.setNotification({
           status: 'error',
           message: `An error occured during the creation of the category ${category.name}`,
+        }),
+      );
+    }
+  };
+};
+
+export const editCategory = (category: Partial<Category>, categoryId: string) => {
+  return async (dispatch: Dispatch) => {
+    const sendRequest = async () => {
+      const response = await api.put(`categories/${categoryId}.json`, category);
+
+      if (response.status !== statusCodes.ok) {
+        throw new Error();
+      }
+
+      return response.data;
+    };
+
+    try {
+      const categoryData = await sendRequest();
+
+      dispatch(categoriesActions.editCategory({ ...categoryData, id: categoryId }));
+      dispatch(
+        rootActions.setNotification({
+          status: 'success',
+          message: `Category ${category.name} edited!`,
+        }),
+      );
+    } catch (_) {
+      dispatch(
+        rootActions.setNotification({
+          status: 'error',
+          message: `An error occured during the edition of the category ${category.name}`,
+        }),
+      );
+    }
+  };
+};
+
+export const deleteCategory = (category: Category) => {
+  return async (dispatch: Dispatch) => {
+    const sendRequest = async () => {
+      const response = await api.delete(`categories/${category.id}.json`);
+
+      if (response.status !== statusCodes.ok) {
+        throw new Error();
+      }
+
+      return response.data;
+    };
+
+    try {
+      await sendRequest();
+
+      dispatch(categoriesActions.deleteCategory(category.id));
+      dispatch(
+        rootActions.setNotification({
+          status: 'success',
+          message: `Category ${category.name} deleted!`,
+        }),
+      );
+    } catch (_) {
+      dispatch(
+        rootActions.setNotification({
+          status: 'error',
+          message: `An error occured during the deletion of the category ${category.name}`,
         }),
       );
     }

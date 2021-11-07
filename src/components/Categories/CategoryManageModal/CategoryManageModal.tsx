@@ -1,9 +1,11 @@
-import { Button, TextField, Select, MenuItem, styled } from '@mui/material';
+import { Button, TextField, Select, MenuItem, styled, IconButton } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import WalletModal from 'components/UI/WalletModal/WalletModal';
 import { useDispatch } from 'react-redux';
-import { addCategory } from 'store/categories/actions';
+import { addCategory, editCategory } from 'store/categories/actions';
+import { Category } from 'models/category';
 
 const CategoryForm = styled('form')(({ theme }) => ({
   '> div': {
@@ -12,11 +14,11 @@ const CategoryForm = styled('form')(({ theme }) => ({
   },
 }));
 
-const CategoryAdd: React.FC = () => {
+const CategoryManageModal: React.FC<{ category?: Category }> = (props) => {
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
+  const [name, setName] = useState(props.category?.name || '');
+  const [type, setType] = useState(props.category?.type || 'Expense');
   const [nameError, setNameError] = useState('');
-  const [type, setType] = useState('expense');
 
   const onNameChange = (e: any) => setName(e.target.value);
   const onTypeChange = (e: any) => setType(e.target.value);
@@ -32,9 +34,38 @@ const CategoryAdd: React.FC = () => {
     dispatch(addCategory({ name, type }));
   };
 
+  const handleEditCategory = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!name) {
+      setNameError('Name is required');
+      return;
+    }
+
+    dispatch(editCategory({ name, type }, props.category!.id));
+  };
+
+  let modalTitle = 'Add Category';
+  let formSubmit = handleAddCategory;
+  let openButton = (
+    <Button color="primary" variant="contained">
+      <AddIcon />
+    </Button>
+  );
+
+  if (props.category) {
+    modalTitle = 'Edit Category';
+    formSubmit = handleEditCategory;
+    openButton = (
+      <IconButton>
+        <EditIcon />
+      </IconButton>
+    );
+  }
+
   return (
-    <WalletModal title="Add Category" openModalButton={<AddIcon />}>
-      <CategoryForm onSubmit={handleAddCategory} noValidate>
+    <WalletModal title={modalTitle} openModalButton={openButton}>
+      <CategoryForm onSubmit={formSubmit} noValidate>
         <TextField error={!name} required label="Name" variant="standard" onChange={onNameChange} value={name} helperText={nameError} />
         <Select variant="standard" value={type} label="Category" onChange={onTypeChange}>
           <MenuItem value="Expense">Expense</MenuItem>
@@ -49,4 +80,4 @@ const CategoryAdd: React.FC = () => {
   );
 };
 
-export default CategoryAdd;
+export default CategoryManageModal;

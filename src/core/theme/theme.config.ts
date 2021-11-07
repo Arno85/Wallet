@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material';
 const theme = createTheme({
   spacing: [0, 4, 8, 16, 32, 64],
   typography: {
-    fontFamily: ['Poppins', 'sans-serif'].join(','),
+    fontFamily: ['Raleway', 'sans-serif'].join(','),
     h1: {
       fontSize: 96,
       fontWeight: 300,
@@ -119,7 +119,7 @@ const theme = createTheme({
 theme.components = {
   MuiCssBaseline: {
     styleOverrides: {
-      'html, body, #root': {
+      html: {
         height: '100%',
         color: theme.palette.text.primary,
         fontFamily: theme.typography.fontFamily,

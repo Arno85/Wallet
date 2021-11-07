@@ -35,6 +35,32 @@ const slice = createSlice({
         categories,
       };
     },
+    editCategory(state, action: PayloadAction<Category>) {
+      const categories = [...state.categories];
+      const categoryIndex = categories.findIndex((c) => c.id === action.payload.id);
+
+      if (categoryIndex !== -1) {
+        categories[categoryIndex] = action.payload;
+      }
+
+      return {
+        ...state,
+        categories,
+      };
+    },
+    deleteCategory(state, action: PayloadAction<string>) {
+      const categories = [...state.categories];
+      const categoryIndex = categories.findIndex((c) => c.id === action.payload);
+
+      if (categoryIndex !== -1) {
+        categories.splice(categoryIndex, 1);
+      }
+
+      return {
+        ...state,
+        categories,
+      };
+    },
   },
 });
 

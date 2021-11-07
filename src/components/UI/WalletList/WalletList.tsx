@@ -7,7 +7,7 @@ const WalletList: React.FC<{
   rows: { [x: string]: string; id: string }[];
   rowClickedHandler?: (rowId: string) => void;
 }> = (props) => {
-  const columnWidth = 100 / props.columns.length;
+  const columnWidth = 100 / (props.columns.length - 1);
 
   const StyledDataGrid = styled(DataGrid)(() => ({
     width: '100%',
@@ -31,12 +31,15 @@ const WalletList: React.FC<{
         backgroundColor: theme.palette.grey[100],
       },
     },
-    '.MuiDataGrid-columnHeader:nth-child(odd), .MuiDataGrid-cell:nth-child(odd)': {
+    '.MuiDataGrid-columnHeader:not(.actions), .MuiDataGrid-cell:not(.actions)': {
       outline: 'none !important',
-      width: `${columnWidth}% !important`,
-      minWidth: `${columnWidth}% !important`,
-      maxWidth: `${columnWidth}% !important`,
+      width: `calc(${columnWidth}% - 50px) !important`,
+      minWidth: `calc(${columnWidth}% - 50px) !important`,
+      maxWidth: `calc(${columnWidth}% - 50px) !important`,
       borderRight: `1px solid ${theme.palette.grey[300]}`,
+    },
+    '.MuiDataGrid-columnHeader.actions, .MuiDataGrid-cell.actions': {
+      outline: 'none !important',
     },
     '.MuiDataGrid-columnHeaderTitleContainer': {
       padding: 0,
@@ -52,7 +55,7 @@ const WalletList: React.FC<{
     }
   };
 
-  return <StyledDataGrid rows={props.rows} columns={props.columns} hideFooter onRowClick={(params) => handleRowClick(params.id)} />;
+  return <StyledDataGrid autoHeight rows={props.rows} columns={props.columns} hideFooter onRowClick={(params) => handleRowClick(params.id)} />;
 };
 
 export default WalletList;

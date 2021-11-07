@@ -1,4 +1,4 @@
-import { Button, ModalUnstyled, styled } from '@mui/material';
+import { Box, Button, ModalUnstyled, styled } from '@mui/material';
 import { Fragment, useState } from 'react';
 
 const Backdrop = styled('div')(
@@ -45,9 +45,9 @@ const WalletModal: React.FC<{ title: string; openModalButton: JSX.Element }> = (
 
   return (
     <Fragment>
-      <Button color="primary" variant="contained" onClick={handleOpen}>
+      <Box sx={{ display: 'flex' }} onClick={handleOpen}>
         {props.openModalButton}
-      </Button>
+      </Box>
       <StyledModal aria-labelledby="unstyled-modal-title" aria-describedby="unstyled-modal-description" open={open} onClose={handleClose} BackdropComponent={Backdrop}>
         <StyledModalBody>
           <h2 id="unstyled-modal-title">{props.title}</h2>
