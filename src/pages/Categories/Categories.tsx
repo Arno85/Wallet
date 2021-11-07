@@ -4,7 +4,7 @@ import { fetchCategories } from 'store/categories/actions';
 import { AppStore } from 'store/appStore';
 import CategoryList from 'components/Categories/CategoryList/CategoryList';
 import CategoryManageModal from 'components/Categories/CategoryManageModal/CategoryManageModal';
-import { styled } from '@mui/material';
+import { LinearProgress, styled } from '@mui/material';
 
 const StyledHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -17,10 +17,14 @@ const StyledHeader = styled('div')(({ theme }) => ({
 const Categories: React.FC = () => {
   const dispatch = useDispatch();
   const categories = useSelector((store: AppStore) => store.categoriesReducer.categories);
+  const categoriesLoaded = useSelector((store: AppStore) => store.categoriesReducer.isLoaded);
+  const categoriesLoading = useSelector((store: AppStore) => store.categoriesReducer.isLoading);
 
   useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+    if (!categoriesLoaded) {
+      dispatch(fetchCategories());
+    }
+  }, [categoriesLoaded, dispatch]);
 
   return (
     <Fragment>
@@ -28,7 +32,8 @@ const Categories: React.FC = () => {
         <h1>Categories</h1>
         <CategoryManageModal />
       </StyledHeader>
-      <CategoryList categories={categories} />
+      {categoriesLoading && <LinearProgress />}
+      {!categoriesLoading && <CategoryList categories={categories} />}
     </Fragment>
   );
 };

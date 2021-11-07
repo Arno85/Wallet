@@ -7,6 +7,7 @@ import WalletSnackBar from 'components/UI/WalletSnackbar/WalletSnackBar';
 import routes from './routes';
 
 const Categories = lazy(() => import('./pages/Categories/Categories'));
+const Transactions = lazy(() => import('./pages/Transactions/Transactions'));
 
 const App = () => {
   const notification = useSelector((store: AppStore) => store.rootReducer.notification);
@@ -21,6 +22,7 @@ const App = () => {
               <Redirect to={routes.categories.baseUrl} />
             </Route>
             <Route path={routes.categories.baseUrl} exact component={Categories} />
+            <Route path={routes.transactions.baseUrl} exact component={Transactions} />
           </Switch>
         </Suspense>
       </Layout>

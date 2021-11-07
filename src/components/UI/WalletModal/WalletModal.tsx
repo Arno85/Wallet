@@ -1,4 +1,4 @@
-import { Box, Button, ModalUnstyled, styled } from '@mui/material';
+import { Box, ModalUnstyled, styled } from '@mui/material';
 import { Fragment, useState } from 'react';
 
 const Backdrop = styled('div')(
@@ -33,7 +33,7 @@ const StyledModalBody = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.primary.contrastText,
   padding: theme.spacing(4),
   h2: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -50,7 +50,7 @@ const WalletModal: React.FC<{ title: string; openModalButton: JSX.Element }> = (
       </Box>
       <StyledModal aria-labelledby="unstyled-modal-title" aria-describedby="unstyled-modal-description" open={open} onClose={handleClose} BackdropComponent={Backdrop}>
         <StyledModalBody>
-          <h2 id="unstyled-modal-title">{props.title}</h2>
+          <h2>{props.title}</h2>
           {props.children}
         </StyledModalBody>
       </StyledModal>

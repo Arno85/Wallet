@@ -8,6 +8,7 @@ const WalletList: React.FC<{
   rowClickedHandler?: (rowId: string) => void;
 }> = (props) => {
   const columnWidth = 100 / (props.columns.length - 1);
+  const actionWidth = 100 / (props.columns.length - 1);
 
   const StyledDataGrid = styled(DataGrid)(() => ({
     width: '100%',
@@ -33,9 +34,9 @@ const WalletList: React.FC<{
     },
     '.MuiDataGrid-columnHeader:not(.actions), .MuiDataGrid-cell:not(.actions)': {
       outline: 'none !important',
-      width: `calc(${columnWidth}% - 50px) !important`,
-      minWidth: `calc(${columnWidth}% - 50px) !important`,
-      maxWidth: `calc(${columnWidth}% - 50px) !important`,
+      width: `calc(${columnWidth}% - ${actionWidth}px) !important`,
+      minWidth: `calc(${columnWidth}% - ${actionWidth}px) !important`,
+      maxWidth: `calc(${columnWidth}% - ${actionWidth}px) !important`,
       borderRight: `1px solid ${theme.palette.grey[300]}`,
     },
     '.MuiDataGrid-columnHeader.actions, .MuiDataGrid-cell.actions': {

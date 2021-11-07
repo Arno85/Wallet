@@ -16,6 +16,7 @@ const Navigation: React.FC = () => {
   return (
     <StyledNav>
       <NavLink to={routes.categories.baseUrl}>Categories</NavLink>
+      <NavLink to={routes.transactions.baseUrl}>Transactions</NavLink>
     </StyledNav>
   );
 };

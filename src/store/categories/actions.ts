@@ -15,6 +15,10 @@ export const fetchCategories = () => {
         throw new Error();
       }
 
+      if (!response.data) {
+        return [];
+      }
+
       const categoryData = Object.keys(response.data).map((k) => {
         const data = response.data[k];
         return {

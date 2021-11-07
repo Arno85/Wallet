@@ -11,7 +11,7 @@ const CategoryList: React.FC<{ categories: Category[] }> = (props) => {
     { field: 'type', headerName: 'Type' },
     {
       field: 'actions',
-      headerName: '',
+      headerName: 'Actions',
       sortable: false,
       disableColumnMenu: true,
       cellClassName: 'actions',

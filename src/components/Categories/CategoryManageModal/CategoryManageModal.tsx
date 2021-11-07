@@ -1,4 +1,4 @@
-import { Button, TextField, Select, MenuItem, styled, IconButton } from '@mui/material';
+import { Button, TextField, Select, MenuItem, styled, IconButton, FormControl, InputLabel } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -66,12 +66,14 @@ const CategoryManageModal: React.FC<{ category?: Category }> = (props) => {
   return (
     <WalletModal title={modalTitle} openModalButton={openButton}>
       <CategoryForm onSubmit={formSubmit} noValidate>
-        <TextField error={!name} required label="Name" variant="standard" onChange={onNameChange} value={name} helperText={nameError} />
-        <Select variant="standard" value={type} label="Category" onChange={onTypeChange}>
-          <MenuItem value="Expense">Expense</MenuItem>
-          <MenuItem value="Income">Income</MenuItem>
-          <MenuItem value="Both">Both</MenuItem>
-        </Select>
+        <TextField error={!name} required label="Name" onChange={onNameChange} value={name} helperText={nameError} />
+        <FormControl fullWidth required>
+          <InputLabel id="type-label">Type</InputLabel>
+          <Select value={type} label="Type" onChange={onTypeChange}>
+            <MenuItem value="Expense">Expense</MenuItem>
+            <MenuItem value="Income">Income</MenuItem>
+          </Select>
+        </FormControl>
         <Button type="submit" color="primary" variant="contained">
           Save
         </Button>

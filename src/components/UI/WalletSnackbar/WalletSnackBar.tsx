@@ -22,7 +22,7 @@ const WalletSnackBar: React.FC<{ status: 'success' | 'error'; message: string }>
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
       <Alert onClose={handleClose} severity={props.status} sx={{ width: '100%' }}>
         {props.message}
       </Alert>
