@@ -20,7 +20,7 @@ const CategoryList: React.FC<{ categories: Category[] }> = (props) => {
       renderCell: (params) => (
         <Fragment>
           <CategoryManageModal category={getCategory(params.row.id)} />
-          <CategoryDeleteModal category={getCategory(params.row.id)} />
+          <CategoryDeleteModal category={getCategory(params.row.id)} categories={props.categories} />
         </Fragment>
       ),
     },

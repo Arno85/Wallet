@@ -65,7 +65,7 @@ const CategoryManageModal: React.FC<{ category?: Category }> = (props) => {
 
   return (
     <WalletModal title={modalTitle} openModalButton={openButton}>
-      <CategoryForm onSubmit={formSubmit} noValidate>
+      <CategoryForm onSubmit={formSubmit} noValidate autoComplete="off">
         <TextField error={!name} required label="Name" onChange={onNameChange} value={name} helperText={nameError} />
         <FormControl fullWidth required>
           <InputLabel id="type-label">Type</InputLabel>

@@ -61,6 +61,20 @@ const slice = createSlice({
         transactions,
       };
     },
+    assignNewCategory(state, action: PayloadAction<{ oldCategoryId: string; newCategoryId: string }>) {
+      const transactions = [...state.transactions];
+
+      transactions.forEach((t) => {
+        if (t.categoryId === action.payload.oldCategoryId) {
+          t.categoryId = action.payload.newCategoryId;
+        }
+      });
+
+      return {
+        ...state,
+        transactions,
+      };
+    },
   },
 });
 

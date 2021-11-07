@@ -1,6 +1,5 @@
-import { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from 'store/categories/actions';
+import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { AppStore } from 'store/appStore';
 import CategoryList from 'components/Categories/CategoryList/CategoryList';
 import CategoryManageModal from 'components/Categories/CategoryManageModal/CategoryManageModal';
@@ -15,16 +14,8 @@ const StyledHeader = styled('div')(({ theme }) => ({
 }));
 
 const Categories: React.FC = () => {
-  const dispatch = useDispatch();
   const categories = useSelector((store: AppStore) => store.categoriesReducer.categories);
-  const categoriesLoaded = useSelector((store: AppStore) => store.categoriesReducer.isLoaded);
   const categoriesLoading = useSelector((store: AppStore) => store.categoriesReducer.isLoading);
-
-  useEffect(() => {
-    if (!categoriesLoaded) {
-      dispatch(fetchCategories());
-    }
-  }, [categoriesLoaded, dispatch]);
 
   return (
     <Fragment>
